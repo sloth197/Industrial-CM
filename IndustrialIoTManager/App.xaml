@@ -1,0 +1,33 @@
+<Application x:Class="IndustrialIoTManager.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:view="clr-namespace:IndustrialIoTManager.View"
+             xmlns:viewModel="clr-namespace:IndustrialIoTManager.ViewModel"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <DataTemplate DataType="{x:Type viewModel:LoginViewModel}">
+            <view:LoginView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:DashboardViewModel}">
+            <view:DashboardView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:EquipmentListViewModel}">
+            <view:EquipmentListView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:SensorMonitoringViewModel}">
+            <view:SensorMonitoringView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:RemoteControlViewModel}">
+            <view:RemoteControlView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:AlarmEventLogViewModel}">
+            <view:AlarmEventLogView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:UserRoleManagementViewModel}">
+            <view:UserRoleManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:SettingsViewModel}">
+            <view:SettingsView />
+        </DataTemplate>
+    </Application.Resources>
+</Application>

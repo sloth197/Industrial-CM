@@ -1,0 +1,39 @@
+<UserControl x:Class="IndustrialIoTManager.View.EquipmentListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="520"
+             d:DesignWidth="900">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <TextBlock FontSize="24"
+                       FontWeight="SemiBold"
+                       Foreground="#1E293B"
+                       Text="{Binding Title}" />
+            <TextBlock Margin="0,6,0,14"
+                       Foreground="#64748B"
+                       Text="설비 상태 및 마지막 통신 시각을 관리합니다." />
+        </StackPanel>
+
+        <DataGrid Grid.Row="1"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  ItemsSource="{Binding Equipments}"
+                  HeadersVisibility="Column"
+                  GridLinesVisibility="Horizontal">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="80" />
+                <DataGridTextColumn Header="장비명" Binding="{Binding Name}" Width="2*" />
+                <DataGridTextColumn Header="상태" Binding="{Binding Status}" Width="*" />
+                <DataGridTextColumn Header="마지막 수신" Binding="{Binding LastHeartbeat}" Width="2*" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
