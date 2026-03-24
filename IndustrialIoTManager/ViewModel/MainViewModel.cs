@@ -21,10 +21,13 @@ public sealed class MainViewModel : ViewModelBase
     private string _currentUserRole = "-";
 
     public MainViewModel()
+        : this(UserRepositoryFactory.Create())
     {
-        IUserRepository userRepository = new InMemoryUserRepository();
-        IAuthService authService = new AuthService(userRepository);
+    }
 
+    public MainViewModel(IUserRepository userRepository)
+    {
+        IAuthService authService = new AuthService(userRepository);
         var loginViewModel = new LoginViewModel(authService, HandleLoginSuccess);
 
         _pages = new Dictionary<string, ViewModelBase>(StringComparer.OrdinalIgnoreCase)
