@@ -34,9 +34,9 @@
                 <TextBlock Margin="0,0,0,6"
                            FontWeight="SemiBold"
                            Text="비밀번호" />
-                <TextBox Margin="0,0,0,18"
-                         Padding="10"
-                         Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" />
+                <PasswordBox Margin="0,0,0,18"
+                             Padding="10"
+                             PasswordChanged="PasswordBox_OnPasswordChanged" />
 
                 <Button Height="42"
                         Content="로그인"

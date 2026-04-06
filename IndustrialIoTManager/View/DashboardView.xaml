@@ -6,32 +6,312 @@
              mc:Ignorable="d"
              d:DesignHeight="520"
              d:DesignWidth="900">
-    <Grid>
-        <StackPanel>
-            <TextBlock FontSize="24"
-                       FontWeight="SemiBold"
-                       Foreground="#1E293B"
-                       Text="{Binding Title}" />
-            <TextBlock Margin="0,6,0,18"
-                       Foreground="#64748B"
-                       Text="실시간 운영 요약(초기 더미 데이터)" />
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="16" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-            <ItemsControl ItemsSource="{Binding SummaryItems}">
+            <Border Grid.Row="0"
+                    Padding="20"
+                    Background="#F8FBFF"
+                    BorderBrush="#D8E1EC"
+                    BorderThickness="1"
+                    CornerRadius="12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel>
+                        <TextBlock FontSize="27"
+                                   FontWeight="SemiBold"
+                                   Foreground="#0F172A"
+                                   Text="{Binding Title}" />
+                        <TextBlock Margin="0,6,0,0"
+                                   FontSize="14"
+                                   Foreground="#475569"
+                                   Text="{Binding Subtitle}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center">
+                        <Border Padding="10,4"
+                                Background="#ECFDF5"
+                                BorderBrush="#A7F3D0"
+                                BorderThickness="1"
+                                CornerRadius="14">
+                            <TextBlock Foreground="#047857"
+                                       FontWeight="SemiBold"
+                                       Text="시스템 상태: 정상" />
+                        </Border>
+                        <TextBlock Margin="0,8,0,0"
+                                   HorizontalAlignment="Right"
+                                   Foreground="#64748B"
+                                   Text="{Binding LastUpdated, StringFormat=최종 갱신 {0}}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <ItemsControl Grid.Row="1"
+                          Margin="0,14,0,0"
+                          ItemsSource="{Binding KpiItems}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel ItemWidth="198" ItemHeight="120" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Margin="0,0,0,10"
-                                Padding="16,12"
-                                Background="#F8FAFC"
-                                BorderBrush="#DCE5F0"
+                        <Border Margin="0,0,12,12"
+                                Padding="14"
+                                Background="#FFFFFF"
+                                BorderBrush="#D8E1EC"
                                 BorderThickness="1"
                                 CornerRadius="10">
-                            <TextBlock FontSize="15"
-                                       Foreground="#0F172A"
-                                       Text="{Binding}" />
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock FontSize="13"
+                                           Foreground="#64748B"
+                                           Text="{Binding Name}" />
+                                <TextBlock Grid.Row="1"
+                                           Margin="0,8,0,4"
+                                           FontSize="28"
+                                           FontWeight="SemiBold"
+                                           Foreground="#0F172A"
+                                           Text="{Binding Value}" />
+                                <TextBlock Grid.Row="2"
+                                           FontWeight="SemiBold"
+                                           Foreground="{Binding TrendColor}"
+                                           Text="{Binding Trend}" />
+                            </Grid>
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </StackPanel>
-    </Grid>
+
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="0,0,14,14"
+                        Padding="14"
+                        Background="#FFFFFF"
+                        BorderBrush="#D8E1EC"
+                        BorderThickness="1"
+                        CornerRadius="12">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock FontSize="16"
+                                   FontWeight="SemiBold"
+                                   Foreground="#1E293B"
+                                   Text="생산 오더 진행 현황" />
+
+                        <DataGrid Grid.Row="1"
+                                  Margin="0,10,0,0"
+                                  AutoGenerateColumns="False"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  CanUserResizeRows="False"
+                                  IsReadOnly="True"
+                                  ItemsSource="{Binding ProductionOrders}"
+                                  RowHeaderWidth="0"
+                                  GridLinesVisibility="Horizontal"
+                                  HeadersVisibility="Column">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="오더번호" Binding="{Binding OrderNo}" Width="2*" />
+                                <DataGridTextColumn Header="라인" Binding="{Binding Line}" Width="*" />
+                                <DataGridTextColumn Header="품목" Binding="{Binding Product}" Width="2*" />
+                                <DataGridTextColumn Header="상태" Binding="{Binding Status}" Width="*" />
+                                <DataGridTextColumn Header="진척률" Binding="{Binding Progress}" Width="*" />
+                                <DataGridTextColumn Header="마감" Binding="{Binding DueTime}" Width="*" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="0,0,14,0"
+                        Padding="14"
+                        Background="#FFFFFF"
+                        BorderBrush="#D8E1EC"
+                        BorderThickness="1"
+                        CornerRadius="12">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock FontSize="16"
+                                   FontWeight="SemiBold"
+                                   Foreground="#1E293B"
+                                   Text="핵심 자재 재고 수준" />
+
+                        <ItemsControl Grid.Row="1"
+                                      Margin="0,10,0,0"
+                                      ItemsSource="{Binding InventoryItems}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Width="222"
+                                            Margin="0,0,10,10"
+                                            Padding="12"
+                                            Background="#F8FAFC"
+                                            BorderBrush="#DCE5F0"
+                                            BorderThickness="1"
+                                            CornerRadius="10">
+                                        <StackPanel>
+                                            <TextBlock FontWeight="SemiBold"
+                                                       Foreground="#0F172A"
+                                                       Text="{Binding MaterialCode}" />
+                                            <TextBlock Margin="0,4,0,8"
+                                                       Foreground="#64748B"
+                                                       Text="{Binding OnHandSummary}" />
+                                            <ProgressBar Height="8"
+                                                         Maximum="100"
+                                                         Value="{Binding FillRate, Mode=OneWay}" />
+                                            <TextBlock Margin="0,6,0,0"
+                                                       HorizontalAlignment="Right"
+                                                       Foreground="#334155"
+                                                       Text="{Binding FillRateText}" />
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="1"
+                        Padding="14"
+                        Background="#FFFFFF"
+                        BorderBrush="#D8E1EC"
+                        BorderThickness="1"
+                        CornerRadius="12">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="14" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock FontSize="16"
+                                       FontWeight="SemiBold"
+                                       Foreground="#1E293B"
+                                       Text="실시간 운영 알림" />
+                            <ItemsControl Grid.Row="1"
+                                          Margin="0,10,0,0"
+                                          ItemsSource="{Binding AlertItems}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Margin="0,0,0,8"
+                                                Padding="10"
+                                                Background="#F8FAFC"
+                                                BorderBrush="{Binding SeverityColor}"
+                                                BorderThickness="3,0,0,0"
+                                                CornerRadius="8">
+                                            <StackPanel>
+                                                <DockPanel>
+                                                    <TextBlock DockPanel.Dock="Left"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{Binding SeverityColor}"
+                                                               Text="{Binding Severity}" />
+                                                    <TextBlock DockPanel.Dock="Right"
+                                                               Foreground="#64748B"
+                                                               Text="{Binding Time}" />
+                                                </DockPanel>
+                                                <TextBlock Margin="0,6,0,0"
+                                                           TextWrapping="Wrap"
+                                                           Foreground="#1F2937"
+                                                           Text="{Binding Message}" />
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
+
+                        <Grid Grid.Row="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock FontSize="16"
+                                       FontWeight="SemiBold"
+                                       Foreground="#1E293B"
+                                       Text="오늘의 작업 지시" />
+                            <ItemsControl Grid.Row="1"
+                                          Margin="0,10,0,0"
+                                          ItemsSource="{Binding QuickActions}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Margin="0,0,0,8"
+                                                Padding="10"
+                                                Background="#F8FAFC"
+                                                BorderBrush="#DCE5F0"
+                                                BorderThickness="1"
+                                                CornerRadius="8">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel>
+                                                    <TextBlock FontWeight="SemiBold"
+                                                               Foreground="#0F172A"
+                                                               Text="{Binding Title}" />
+                                                    <TextBlock Margin="0,4,0,0"
+                                                               Foreground="#64748B"
+                                                               Text="{Binding Owner}" />
+                                                </StackPanel>
+                                                <TextBlock Grid.Column="1"
+                                                           VerticalAlignment="Center"
+                                                           Foreground="#334155"
+                                                           FontWeight="SemiBold"
+                                                           Text="{Binding DueTime}" />
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

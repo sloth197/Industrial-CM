@@ -15,13 +15,13 @@ public sealed class LoginViewModel : ViewModelBase
 
     private string _userName = string.Empty;
     private string _password = string.Empty;
-    private string _statusMessage = "더미 계정: admin / admin123";
+    private string _statusMessage = string.Empty;
 
     public LoginViewModel(IAuthService authService, Action<UserAccount> onLoginSuccess)
     {
         _authService = authService;
         _onLoginSuccess = onLoginSuccess;
-        _loginCommand = new RelayCommand(ExecuteLogin, CanLogin);
+        _loginCommand = new RelayCommand(ExecuteLogin);
     }
 
     public string UserName
@@ -29,10 +29,7 @@ public sealed class LoginViewModel : ViewModelBase
         get => _userName;
         set
         {
-            if (SetProperty(ref _userName, value))
-            {
-                _loginCommand.RaiseCanExecuteChanged();
-            }
+            SetProperty(ref _userName, value);
         }
     }
 
@@ -41,10 +38,7 @@ public sealed class LoginViewModel : ViewModelBase
         get => _password;
         set
         {
-            if (SetProperty(ref _password, value))
-            {
-                _loginCommand.RaiseCanExecuteChanged();
-            }
+            SetProperty(ref _password, value);
         }
     }
 
@@ -56,13 +50,14 @@ public sealed class LoginViewModel : ViewModelBase
 
     public ICommand LoginCommand => _loginCommand;
 
-    private bool CanLogin(object? _)
-    {
-        return !string.IsNullOrWhiteSpace(UserName) && !string.IsNullOrWhiteSpace(Password);
-    }
-
     private void ExecuteLogin(object? _)
     {
+        if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(Password))
+        {
+            StatusMessage = "아이디와 비밀번호를 모두 입력하세요.";
+            return;
+        }
+
         if (_authService.ValidateCredentials(UserName, Password, out var user) && user is not null)
         {
             StatusMessage = $"{user.UserName} 계정으로 로그인 성공";
