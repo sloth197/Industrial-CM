@@ -9,7 +9,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0">
@@ -19,13 +19,16 @@
                        Text="{Binding Title}" />
             <TextBlock Margin="0,6,0,14"
                        Foreground="#64748B"
-                       Text="현장 센서의 실시간 측정값(더미)" />
+                       Text="현장 센서의 실시간 측정값" />
         </StackPanel>
 
         <DataGrid Grid.Row="1"
                   AutoGenerateColumns="False"
+                  CanUserAddRows="False"
                   IsReadOnly="True"
                   ItemsSource="{Binding SensorReadings}"
+                  VerticalAlignment="Top"
+                  MaxHeight="520"
                   HeadersVisibility="Column"
                   GridLinesVisibility="Horizontal">
             <DataGrid.Columns>

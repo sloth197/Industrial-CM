@@ -9,7 +9,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0">
@@ -24,8 +24,11 @@
 
         <DataGrid Grid.Row="1"
                   AutoGenerateColumns="False"
+                  CanUserAddRows="False"
                   IsReadOnly="True"
                   ItemsSource="{Binding Equipments}"
+                  VerticalAlignment="Top"
+                  MaxHeight="520"
                   HeadersVisibility="Column"
                   GridLinesVisibility="Horizontal">
             <DataGrid.Columns>

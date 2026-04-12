@@ -19,7 +19,7 @@
                        Text="{Binding Title}" />
             <TextBlock Margin="0,6,0,14"
                        Foreground="#64748B"
-                       Text="사용자 계정 및 역할 조회(더미 데이터)" />
+                       Text="사용자 계정 및 역할 조회" />
         </StackPanel>
 
         <DataGrid Grid.Row="1"

@@ -49,7 +49,7 @@ public sealed class DashboardViewModel : ViewModelBase
         ];
     }
 
-    public string Title => "ERP 통합 운영 대시보드";
+    public string Title => "산업 통합 운영 대시보드";
     public string Subtitle => "생산, 품질, 재고, 설비 현황을 한 화면에서 관리";
     public string LastUpdated { get; }
 
